@@ -1,0 +1,143 @@
+<?php session_start(); 
+
+if(!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])){
+   // Redirect the user to the login page
+   header("Location: home.php");
+   exit();
+
+   setcookie($_SESSION['user_id'], "", time() - 2500);
+}
+
+?>
+
+
+<html>
+<head> 
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .export-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+        margin-bottom: 16px;
+    }
+
+    a {
+        background-color: #4CAF50;
+        color: white;
+        padding: 4px 8px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+        margin-bottom: 16px;
+    }
+</style>
+<script>
+function exportToExcel() {
+    // Get the table data
+    var table = document.getElementsByTagName("table")[0];
+    var rows = table.getElementsByTagName("tr");
+    var data = [];
+    for (var i = 0; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName("td");
+        var row = [];
+        for (var j = 0; j < cells.length; j++) {
+            row.push(cells[j].innerText);
+        }
+        data.push(row.join(","));
+    }
+    var csv = data.join("\n");
+
+    // Download the file
+    var link = document.createElement("a");
+    link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+    link.setAttribute("download", "Invoice_Data.csv");
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+<script type="text/javascript">
+//Search
+function searchTable() {
+    // Declare variables
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("search-box");
+    filter = input.value.toUpperCase();
+    table = document.getElementsByTagName("table")[0];
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        // Skip the header row
+        if (i == 0) {
+            continue;
+        }
+        // Loop through all table cells in this row
+        for (j = 0; j < tr[i].cells.length; j++) {
+            td = tr[i].cells[j];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    break;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+}
+</script>
+</head>
+<body><input type="text" id="search-box" onkeyup="searchTable()" placeholder="Search...">
+
+<?php
+include("invoice_db.php");
+
+$query = "SELECT * FROM `invoices`";
+$result = mysqli_query($conn, $query);
+
+if(mysqli_num_rows($result) > 0) {
+    echo "<table>";
+    echo " <tr><th>Vendor Code</th><th>Vendor Name</th><th>Material</th><th>Inv.Number</th><th>Date</th><th>Amount</th><th>CostCenter<th>Username</th><th>Department</th><th>InvStatus</th><th>Status Date</th><th>Remarks</th><th>&nbsp&nbsp&nbsp&nbsp Operation</th><th>Download</th></tr>";
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "<tr><td>" . $row['vendor_code'] . "</td><td>" . $row['vendor_name'] . "</td><td>" . $row['material_service_ordered'] . "</td><td>" . $row['invoice_number'] . "</td><td>" . $row['invoice_date'] . "</td><td>" . $row['invoice_amount'] . "</td><td>" . $row['cost_center'] . "</td><td>" . $row['username'] . "</td><td>" . $row['user_department'] . "</td><td>" . $row['invoice_status'] . "</td><td>" . $row['status_date'] . "</td><td>" . $row['remarks'] . "</td><td>
+            <a href='updateinvoice.php?id=$row[invoice_number]'>Update</a><a href= 'deleteinvoice.php?del=$row[invoice_number]'>Delete</a>
+        </td>
+            <td><a href='download.php?invoice_number=$row[invoice_number]'>Download</a></td></tr>";
+    }
+    echo "</table>";
+    echo "<button class='export-btn' onclick='exportToExcel()'>Export to Excel</button>";
+} else {
+    echo "<h2>No data found!</h2>";
+}
+
+mysqli_close($conn);
+?>
+
+
+
+</body>
+</html>

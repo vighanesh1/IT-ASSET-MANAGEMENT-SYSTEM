@@ -1,0 +1,123 @@
+
+<!-- saved from url=(0036)http://localhost/itm/invoiceform.php -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>connection established
+Email sent Error
+
+
+
+
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoice Entry Form</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="./Invoice Entry Form_files/bootstrap.min.css">
+  <!-- Include custom CSS -->
+  <style>
+    /* Add your custom CSS styles here */
+    
+
+       .form-group label {
+      font-weight: bold;
+    }
+    select.form-control {
+      width: 100%;
+    }
+    .container {
+      margin-top: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      background-color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+    .container:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: -1;
+      transform: translateY(100%);
+      transition: transform 0.5s ease-in-out;
+    }
+    .container:hover:before {
+      transform: translateY(0);
+    }
+  </style>
+
+
+  <div class="container">
+    <h1>Invoice Entry Form</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="vendor-code">Vendor Code:</label>
+        <input type="text" class="form-control" id="vendor-code" name="vendorcode">
+      </div>
+      <div class="form-group">
+        <label for="vendor-name">Vendor Name:</label>
+        <input type="text" class="form-control" id="vendor-name" name="vendorname">
+      </div>
+      <div class="form-group">
+        <label for="material-ordered">Material/Service Ordered:</label>
+        <input type="text" class="form-control" id="material-ordered" name="material">
+      </div>
+      <div class="form-group">
+        <label for="invoice-number">Invoice Number:</label>
+        <input type="text" class="form-control" id="invoice-number" name="invoicenumber">
+      </div>
+      <div class="form-group">
+        <label for="invoice-date">Invoice Date:</label>
+        <input type="date" class="form-control" id="invoice-date" name="date">
+      </div>
+      <div class="form-group">
+        <label for="invoice-amount">Invoice Amount:</label>
+        <input type="number" class="form-control" id="invoice-amount" name="invoiceamount">
+      </div>
+      <div class="form-group">
+        <label for="cost-center">Cost Center:</label>
+        <input type="text" class="form-control" id="cost-center" name="costcenter">
+      </div>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="user-department">User Department:</label>
+        <input type="text" class="form-control" id="user-department" name="userdept">
+      </div>
+      <div class="form-group">
+        <label for="invoice-status">Invoice Status:</label>
+        <select class="form-control" id="invoice-status" name="invstatus">
+          <option value="PAID">PAID</option>
+          <option value="UNPAID">UNPAID</option>
+          <option value="BOOKED">BOOKED</option>
+          <option value="GIVEN TO SANTOSH KOTIAN">GIVEN TO SANTOSH KOTIAN</option>
+          <option value="GIVEN TO PRADEEP BHRAMANKAR">GIVEN TO PRADEEP BHRAMANKAR</option>
+        </select>
+      </div>
+
+      <div class="form-group"><label>Upload Invoice : </label><input type="file" name="upload"></div>
+      <div class="form-group">
+        <label for="remarks">Remarks:</label>
+        <input type="text" name="remarks" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="status-date">Status Date:</label>
+        <input type="date" class="form-control" id="invoice-date" name="sdate">
+      </div>
+      <input type="submit" name="submit">Save
+    </form>
+  </div>
+  <!-- Include jQuery and Bootstrap JS -->
+  <script src="./Invoice Entry Form_files/jquery-3.5.1.slim.min.js.download"></script>
+
+  <script src="./Invoice Entry Form_files/popper.min.js.download"></script>
+  <script src="./Invoice Entry Form_files/bootstrap.min.js.download"></script>
+
+
+</body></html>
